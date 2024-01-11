@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Cases</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+<div class="name">
+    <p>{{ session['name'] }}</p>
+</div>
+
+<div class="header">
+    <a href="/" class="menu-icon">
+      <img src="../static/icons/home_icon.png" alt="home_icon" style="width: inherit;">
+    </a>
+    <h1>Add Case</h1>
+    <div class="dropdown">
+        <div class="profile-pic dropbtn">
+          <img src="../static/icons/profile.png" alt="Profile_image" style="width: inherit; border-radius: 50%;">
+        </div>
+        <div id="dropdown-content"  class="dropdown-content">
+            <a href="/upload">Add Case</a>
+            <a href="/logout">Log Out</a>
+        </div>
+
+    </div>
+</div>
+
+<div class="login-container">
+  <h2>Image Segmentation</h2>
+
+  <form action="/submit_case" method="post" enctype="multipart/form-data">
+    <label for="case_name">Case Name:</label><br>
+    <input type="text" id="case_name" name="case_name"><br><br>
+
+    <label for="file">Select file to upload:</label><br>
+    <input type="file" name="file" id="file" accept=".dcm"><br><br>
+
+    <label for="notes">Additional Notes:</label><br>
+    <textarea name="notes" id="notes" cols="30" rows="10" placeholder="Any Additional Notes..." style="padding: 7px;"></textarea>
+
+    <input type="submit" value="Upload Image" name="submit">
+  </form>
+</div>
+
+</body>
+</html>

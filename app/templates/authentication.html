@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+<div class="header">
+    <a href="/" class="menu-icon"></a>
+    </div>
+</div>
+
+<div class="login-container">
+    <div class="tab">
+        <div id="login-tab" class="tab-link active">LOGIN</div>
+        <div id="register-tab" class="tab-link">REGISTER</div>
+    </div>
+    <div id="login_form" class="form">
+        <form action="/login" method="post" onsubmit="return validateLoginForm()">
+            <label for="email">Email:</label><br>
+            <input type="text" id="loginemail" name="email"><br><br>
+
+            <label for="password">Password:</label><br>
+            <input type="password" id="loginpassword" name="password"><br><br>
+
+            <input type="submit" value="Login">
+        </form>
+    </div>
+    <div id="register_form" class="form" style="display: none;">
+        <form action="/register" method="post" onsubmit="return validateRegisterForm()" >
+            <label for="name">Full Name:</label><br>
+            <input type="text" id="name" name="name"><br><br>
+
+            <label for="email">Email:</label><br>
+            <input type="text" id="registeremail" name="email"><br><br>
+
+            <label for="gender">Gender:</label><br>
+            <select id="gender" name="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select><br>
+
+            <label for="password">Password:</label><br>
+            <input type="password" id="registerpassword" name="password"><br><br>
+
+            <label for="confirm">Confirm Password:</label><br>
+            <input type="password" id="confirm" name="confirm"><br><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+     
+</div>
+<script src="../static/js/script.js"></script>
+</body>
+</html>

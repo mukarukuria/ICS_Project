@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ case.case_name }}</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+<div class="name">
+    <p>{{ session['name'] }}</p>
+</div>
+
+<div class="header">
+    <a href="/" class="menu-icon">
+        <img src="../static/icons/home_icon.png" alt="home_icon" style="width: inherit;">
+    </a>
+    <h1>{{ case.case_name }}</h1>
+    <div class="dropdown">
+        <div class="profile-pic dropbtn">
+            <img src="../static/icons/profile.png" alt="Profile_image" style="width: inherit; border-radius: 50%;">
+        </div>
+        <div id="dropdown-content"  class="dropdown-content">
+            <a href="/upload">Add Case</a>
+            <a href="/logout">Log Out</a>
+        </div>
+
+    </div>
+</div>
+
+<div class="content">
+    <div class="results">
+        <h2>RESULTS</h2>
+        <button id="add-notes-button">Add Notes</button>
+        <form  action="/add_notes" method="post"  id="add-notes-form" style="display: none;">
+            <textarea id="notes" name="additional_notes" placeholder="Enter notes..."></textarea>
+            <input type="hidden" name="case_id" value="{{ case.caseid }}">
+            <input type="submit" value="Submit">
+        </form>
+        <ul>
+            <li>{{ case.notes }}</li>
+            {% for note in notes %}
+                <li>{{ note.additional_notes }}</li>
+            {% endfor %}
+        </ul>
+        <div class="delete-div">
+           <form method="POST" action="{{ url_for('delete_case', caseid=case.caseid) }}">
+                <input type="submit" value="Delete Case" class="carousel-button">
+            </form> 
+        </div>
+        
+    </div>
+    <div class="image">
+        <h2 style="text-align: center;"> Image Results</h2>
+        <div class="carousel">
+            <img class="carousel-image active" src="{{ url_for('static', filename='uploads/' + png_filename) }}" alt="Original Image">
+            <img class="carousel-image" src="{{ url_for('static', filename='uploads/' + result.file_path) }}" alt="Contoured Image">
+            <button class="carousel-button prev">Prev</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    var dropdown = document.querySelector('.dropbtn');
+
+    dropdown.addEventListener('click', function(event) {
+        event.stopPropagation();
+        var dropdownContent = document.getElementById('dropdown-content');
+        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+    });
+
+    window.addEventListener('click', function() {
+        document.getElementById('dropdown-content').style.display = 'none';
+    });
+
+    var images = Array.from(document.querySelectorAll('.carousel-image'));
+    var currentIndex = 0;
+
+    document.querySelector('.carousel-button.prev').addEventListener('click', function() {
+        images[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        images[currentIndex].classList.add('active');
+    });
+
+    document.getElementById('add-notes-button').addEventListener('click', function() {
+        this.style.display = 'none';
+        document.getElementById('add-notes-form').style.display = 'block';
+    });
+
+    document.addEventListener('click', function(event) {
+        var form = document.getElementById('add-notes-form');
+        var button = document.getElementById('add-notes-button');
+        var isClickInsideForm = form.contains(event.target);
+        var isClickOnButton = button.contains(event.target);
+
+        if (!isClickInsideForm && !isClickOnButton && form.style.display === 'block') {
+            form.style.display = 'none';
+            button.style.display = 'block';
+        }
+    });
+</script>
+
+</body>
+</html> 

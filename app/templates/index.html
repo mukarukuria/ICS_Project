@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Cases</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+<div class="name">
+    <p>{{ session['name'] }}</p>
+</div>
+<div class="header">
+    <a href="/" class="menu-icon">
+        <img src="../static/icons/home_icon.png" alt="home_icon" style="width: inherit;">
+    </a>
+    <h1>PATIENT CASES</h1>
+    <div class="dropdown">
+        <div class="profile-pic dropbtn">
+            <img src="../static/icons/profile.png" alt="Profile_image" style="width: inherit; border-radius: 50%;">
+        </div>
+        <div id="dropdown-content"  class="dropdown-content">
+            <a href="/upload">Add Case</a>
+            <a href="/logout">Log Out</a>
+        </div>
+    </div>
+</div>
+
+<div class="cases">
+    {% for case in cases %}
+        <a href="{{ url_for('results', caseid=case.caseid) }}">
+            <div class="case">
+                <div class="details">
+                    <ul class="ul">
+                        <li><strong>{{ case.case_name }}</strong></li>
+                        <li><small>Submitted by: {{case.user.name}}</small></li>
+                    </ul>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+    <a href="/upload">
+        <div class="case">
+            <p class="add-case">+</p>
+        </div>
+    </a>
+</div>
+
+<script>
+    var dropdown = document.querySelector('.dropbtn');
+
+    dropdown.addEventListener('click', function(event) {
+        event.stopPropagation();
+        var dropdownContent = document.getElementById('dropdown-content');
+        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+    });
+
+    window.addEventListener('click', function() {
+        document.getElementById('dropdown-content').style.display = 'none';
+    });
+</script>
+
+</body>
+</html> 
